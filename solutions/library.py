@@ -1,23 +1,39 @@
 import csv
+from asyncio import timeout
 from multiprocessing import Pool, cpu_count
-
-import csvfile
 import yt_dlp
 import time
+
+from _testcapi import error
+
 
 def downloadvideo(url):
   try:
     ydl_opts = {
         "outtmpl": "%(title)s.%(ext)s",
         "nocheckcertificate": True,
+        "socket_timeout": 30,
         "remote_components": "ejs:github",
         "js_runtimes": ["node"]
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
-    return f"OK: {url}"
+        if timeout(ydl.download([url])): return {
+            "url": url,
+            "status": "OK",
+            "error": "Download timeout"
+        }
+        else:
+            ydl.download(url)
+    return {
+          "url": url,
+          "status": "OK"
+      }
   except Exception as e:
-    return f"ERROR: {url} -> {e}"
+      return {
+          "url": url,
+          "status": "Failed",
+          "error": "failed to download"
+      }
 
 
 # Note: on MAC install homebrew & run: brew install ffmpeg and then run brew install node (bash - node.js for jscript support)
@@ -35,6 +51,7 @@ def get_video_metadata(url):
         ydl_opts = {
             "outtmpl": "%(title)s.%(ext)s",
             "nocheckcertificate": True,
+            "socket_timeout": 30,
             "remote_components": "ejs:github",
             "js_runtimes": {"node": {}},   # FIXED
         }
@@ -56,7 +73,7 @@ def get_video_metadata(url):
         return {
             "url":url,
             "status": "OK",
-            "error": ""
+            "error": "failed to get metadata"
         }
 
 def parallel_download(path, outputpath, outputmetadatapath):
@@ -77,7 +94,11 @@ def parallel_download(path, outputpath, outputmetadatapath):
         f"Total time: {elapsed} seconds\n"
         f"## Complexity\n"
         f"Time complexity: O(n)\n"
-        f"Space complexity: O(1)\n")
+        f"Space complexity: O(1)\n"
+        f"Download status\n"
+        f"Successful downloads: {urls} \n"
+        f"Failed downloads:{urls}, {error} \n"
+        )
     print("All videos downloaded successfully in: ", elapsed, "seconds")
 
     for url in urls:

@@ -1,7 +1,7 @@
 url,title,duration,uploader,views,extension,status,error
-url,,,,,,OK,
-https://www.youtube.com/watch?v=jNQXAC9IVRw,Me at the zoo,19,jawed,391692794,webm,OK,
+url,,,,,,OK,failed to get metadata
+https://www.youtube.com/watch?v=jNQXAC9IVRw,Me at the zoo,19,jawed,391693429,webm,OK,
 https://www.youtube.com/watch?v=BB49x_uMlGA,10 sec 2D Test animation,11,Yanmotion,58847,webm,OK,
 https://www.youtube.com/watch?v=Hm5ieMoxc4c,[TEST] 10 Second Countdown,11,Design Pilot,3511,mkv,OK,
-https://www.youtube.com/watch?v=LeAltgu_pbM,My Snowboarding Skillz,11,mw,6574282,webm,OK,
-https://www.youtube.com/watch?v=tCDvOQI3pco,10 Second Timer,10,Timer,1293417,webm,OK,
+https://www.youtube.com/watch?v=LeAltgu_pbM,My Snowboarding Skillz,11,mw,6574300,webm,OK,
+https://www.youtube.com/watch?v=tCDvOQI3pco,10 Second Timer,10,Timer,1293457,webm,OK,
